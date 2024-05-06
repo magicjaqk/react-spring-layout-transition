@@ -2,9 +2,7 @@ import React from "react";
 import AnimatedFlipComponent from "./AnimatedFlip";
 import AnimatePresence from "./AnimatePresence";
 
-type Props = {};
-
-const App = (props: Props) => {
+const App = () => {
   const [toggle, setToggle] = React.useState(false);
 
   return (
@@ -15,7 +13,7 @@ const App = (props: Props) => {
             onClick={() => {
               setToggle(!toggle);
             }}
-            className="rounded bg-blue-500 px-4 py-2 text-white"
+            className="mb-8 rounded bg-blue-500 px-4 py-2 text-white"
           >
             Toggle
           </button>
@@ -25,18 +23,22 @@ const App = (props: Props) => {
           <>
             <AnimatedFlipComponent
               layoutId="square"
-              className="relative left-40"
+              className="ml-80 h-40 w-96 bg-red-500"
             >
-              <div className="h-40 w-96 bg-red-500"></div>
+              {/* <AnimatedFlipComponent layoutId="hello"> */}
+              <p className="font-bold text-white">Hello</p>
+              {/* </AnimatedFlipComponent> */}
             </AnimatedFlipComponent>
           </>
         ) : (
           <>
             <AnimatedFlipComponent
               layoutId="square"
-              className="relative right-40"
+              className="relative mr-80 h-10 w-10 bg-red-500"
             >
-              <div className="relative h-10 w-10 bg-red-500"></div>
+              {/* <AnimatedFlipComponent layoutId="hello"> */}
+              <p className="font-bold text-white">Hello</p>
+              {/* </AnimatedFlipComponent> */}
             </AnimatedFlipComponent>
           </>
         )}

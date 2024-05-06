@@ -26,6 +26,16 @@ function AnimatedFlip({ layoutId, ...props }: AnimatedFlipProps) {
     config: props.config ?? defaultConfig,
   }));
 
+  // const [childSpring, childSpringApi] = useSpring(
+  //   () =>
+  //     ({
+  //       scaleX: 1,
+  //       scaleY: 1,
+  //       config: props.config ?? defaultConfig,
+  //     }) as any,
+  // );
+
+  // Animation on mount
   React.useLayoutEffect(() => {
     if (originalElementRect && itemRef.current) {
       const currentRect = itemRef.current.getBoundingClientRect();
@@ -73,17 +83,39 @@ function AnimatedFlip({ layoutId, ...props }: AnimatedFlipProps) {
     return () => {};
   }, [originalElementRect, springApi]);
 
+  // Initial layout
   React.useLayoutEffect(() => {
     if (!originalElementRect && itemRef.current) {
       layoutMap.set(layoutId, itemRef.current.getBoundingClientRect());
     }
   }, []);
 
+  // Resize listener
+  React.useEffect(() => {
+    const updateRectOnResize = () => {
+      if (itemRef.current) {
+        layoutMap.set(layoutId, itemRef.current.getBoundingClientRect());
+      }
+    };
+
+    window.addEventListener("resize", updateRectOnResize);
+
+    return () => {
+      window.removeEventListener("resize", updateRectOnResize);
+    };
+  }, []);
+
   return (
     <animated.div style={{ ...spring }} {...props}>
-      <div ref={itemRef} className="relative h-auto w-auto">
-        {props.children}
-      </div>
+      <animated.div
+        style={{
+          scaleX: spring.scaleX.to((x) => 1 / x),
+          scaleY: spring.scaleY.to((y) => 1 / y),
+        }}
+        className="relative h-auto w-auto"
+      >
+        <div ref={itemRef}>{props.children}</div>
+      </animated.div>
     </animated.div>
   );
 }
