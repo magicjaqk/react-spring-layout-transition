@@ -9,8 +9,8 @@ interface AnimatedFlipProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 function AnimatedFlip({ layoutId, ...props }: AnimatedFlipProps) {
   const defaultConfig = {
-    // easing: easings.easeInOutExpo,
-    // duration: 1000,
+    easing: easings.easeInOutExpo,
+    duration: 1000,
   };
   const itemRef = React.useRef<HTMLDivElement>(null);
 
@@ -44,12 +44,18 @@ function AnimatedFlip({ layoutId, ...props }: AnimatedFlipProps) {
       const deltaScaleX = originalElementRect.width / currentRect.width;
       const deltaScaleY = originalElementRect.height / currentRect.height;
 
+      // console.log({
+      //   currentRect,
+      //   deltaX,
+      //   deltaY,
+      //   deltaScaleX,
+      //   deltaScaleY,
+      // });
+
       console.log({
-        currentRect,
-        deltaX,
-        deltaY,
-        deltaScaleX,
         deltaScaleY,
+        originalElementRectHeight: originalElementRect.height,
+        currentRectHeight: currentRect.height,
       });
 
       springApi.start({
@@ -106,15 +112,16 @@ function AnimatedFlip({ layoutId, ...props }: AnimatedFlipProps) {
   }, []);
 
   return (
-    <animated.div style={{ ...spring }} {...props}>
+    <animated.div ref={itemRef} style={{ ...spring }} {...props}>
       <animated.div
         style={{
           scaleX: spring.scaleX.to((x) => 1 / x),
           scaleY: spring.scaleY.to((y) => 1 / y),
+          width: spring.scaleX.to((x) => `${(1 - x) * 100}%`),
         }}
         className="relative h-auto w-auto"
       >
-        <div ref={itemRef}>{props.children}</div>
+        <div>{props.children}</div>
       </animated.div>
     </animated.div>
   );
