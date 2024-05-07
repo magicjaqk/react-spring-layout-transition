@@ -4,6 +4,7 @@ import { withLayoutAnimation } from "./withLayoutAnimation";
 
 const AnimatedLayoutDiv = withLayoutAnimation("div");
 const AnimatedLayoutButton = withLayoutAnimation("button");
+const AnimatedLayoutText = withLayoutAnimation("p");
 
 const App = () => {
   const [toggle, setToggle] = React.useState(false);
@@ -26,22 +27,18 @@ const App = () => {
             <>
               <AnimatedLayoutDiv
                 layoutId="square"
-                className="relative left-96 flex h-80 w-80 items-center justify-center bg-red-500"
+                className="relative left-96 flex h-80 w-80 items-center justify-center rounded border border-blue-900"
               >
-                {/* <AnimatedFlipComponent layoutId="hello"> */}
-                <p className="font-bold text-white">Hello</p>
-                {/* </AnimatedFlipComponent> */}
+                <p className="font-bold text-white">there</p>
               </AnimatedLayoutDiv>
             </>
           ) : (
             <>
               <AnimatedLayoutDiv
                 layoutId="square"
-                className="relative right-96 flex h-40 w-40 items-center justify-center bg-red-500"
+                className="relative right-96 flex h-40 w-80 items-center justify-center rounded border border-blue-900"
               >
-                {/* <AnimatedFlipComponent layoutId="hello"> */}
-                <p className="font-bold text-white">There</p>
-                {/* </AnimatedFlipComponent> */}
+                <p className="font-bold text-white">Hello</p>
               </AnimatedLayoutDiv>
             </>
           )}
